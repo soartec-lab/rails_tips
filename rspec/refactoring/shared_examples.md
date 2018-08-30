@@ -65,7 +65,7 @@ end
 ```
 
 #　その他
-it_behaves_like呼び出し時に引数を渡してshared example内で使用したりできるそうです。
+it_behaves_like呼び出し時に引数を渡してshared_example内で使用したりできるそうです。
 
 # 参考
 http://samurai.ataglance.jp/rspec_shared_examples/
