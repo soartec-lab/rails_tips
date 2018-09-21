@@ -12,6 +12,7 @@ describe 'Unshared' do
   let(:b){ true }
   let(:i){ 1 }
   let(:s){ 'hello' }
+
   context 'in context 1' do
     it "is true" do
       expect(b).to eq(true)
@@ -23,6 +24,7 @@ describe 'Unshared' do
       expect(s).to eq('hello')
     end
   end
+
   context 'in context 2' do
     it "is true" do
       expect(b).to eq(true)
@@ -52,12 +54,15 @@ describe 'SharedExamples' do
       expect(s).to eq('hello')
     end
   end
+
   let(:b){ true }
   let(:i){ 1 }
   let(:s){ 'hello' }
+
   context 'in context 1' do
     it_behaves_like "share me"
   end
+
   context 'in context 2' do
     it_behaves_like "share me"
   end
