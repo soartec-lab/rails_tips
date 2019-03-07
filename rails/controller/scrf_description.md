@@ -1,25 +1,46 @@
 # CSRF対策について
 
-`form_tag`を使用するとUIの為の`inputタグ`と`type = "hidden"`の`inputタグ`が作成される
+## トークンの生成
 
-```html
-<form accept-charset="UTF-8" action="/home/index" method="post">
-  <div style="margin:0;padding:0">
-    <input name="utf8" type="hidden" value="&#x2713;" />
-    <input name="authenticity_token" type="hidden" value="f755bb0ed134b76c432144748a6d4b7a7ddf2b71" />
-  </div>
-  Form contents
-</form>
+`Rails new` した後の`app/views/layouts/application.html.erb`に`<%= csrf_meta_tags %>`のタグが記述されています。
+この`csrf_meta_tags`メソッドは以下の定義がされています。
+
+```ruby
+def csrf_meta_tags
+  if defined?(protect_against_forgery?) && protect_against_forgery?
+    [
+      tag("meta", name: "csrf-param", content: request_forgery_protection_token),
+      tag("meta", name: "csrf-token", content: form_authenticity_token)
+    ].join("\n").html_safe
+  end
+end
 ```
 
-Railsは以下の2つに同様のCSRFトークンを埋めこみます。
+レンダリングされるとする時に以下を行います。
 
-* `<input name="authenticity_token" type="hidden" value="f755bb0ed134b76c432144748a6d4b7a7ddf2b71" />`の`value`
-* セッションcookie
+* Settionにトークンを格納
+
+`SessionStore`を設定している場合はそのストアを見に行きます。
+
+* HTMLに暗号化したトークンを出力
+
+以下のようなHTMLが生成されます。
+
+```html
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="vtaJFQ38doX0b7wQpp0G3H7aUk9HZQni3jHET4yS8nSJRt85Tr6oH7nroQc01dM+C/dlDwt5xPff5LwyZcggeg==" />
+```
+
+# 検証
 
 ユーザーがPOSTリクエストを送信するときに、HTMLに埋められていたCSRFトークンも一緒に送信されます。
-Railsはページのトークンとセッション内のトークンを比較し、両者が一致することを確認します。
+RailsのCSRF対策では、以下の2つのトークンが同一か検証します。
 
+* `<meta name="csrf-token" content="vtaJFQ38doX0b7wQpp0G3H7aUk9HZQni3jHET4yS8nSJRt85Tr6oH7nroQc01dM+C/dlDwt5xPff5LwyZcggeg==" />`に埋め込まれたトークン`vtaJFQ38doX0b7wQpp0G3H7aUk9HZQni3jHET4yS8nSJRt85Tr6oH7nroQc01dM+C/dlDwt5xPff5LwyZcggeg==`
+
+このトークンは、暗号化されておりRailsは検証時に復号化します。
+
+* Settionで保持しているトークン
 
 # 参考
 ## 記事
