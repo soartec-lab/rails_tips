@@ -38,8 +38,6 @@ RailsのCSRF対策では、以下の2つのトークンが同一か検証しま�
 
 * `<meta name="csrf-token" content="vtaJFQ38doX0b7wQpp0G3H7aUk9HZQni3jHET4yS8nSJRt85Tr6oH7nroQc01dM+C/dlDwt5xPff5LwyZcggeg==" />`に埋め込まれたトークン`vtaJFQ38doX0b7wQpp0G3H7aUk9HZQni3jHET4yS8nSJRt85Tr6oH7nroQc01dM+C/dlDwt5xPff5LwyZcggeg==`
 
-このトークンは、暗号化されておりRailsは検証時に復号化します。
-
 * Settionで保持しているトークン
 
 # 参考
