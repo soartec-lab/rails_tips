@@ -4,12 +4,24 @@
 レベルキャッシュの最も効果的な実装方法は、Rails.cache.fetchメソッドを利用することです。このメソッドは、キャッシュの書き込みと読み出しの両方に対応しています。引数が1つだけの場合、キーを読み出し、キャッシュから値を取り出して返します。ブロックを引数として渡すと、キャッシュにヒットしなかった場合にブロックが実行されます。ブロックの戻り値は、指定のキャッシュキーの下にあるキャッシュに書き込まれます。キャッシュにヒットした場合は、ブロックを実行せずにキャッシュの値を返します。
 
 ```
+def cache_users
+  key = "cache_users"
+
+  Rails.cache.fetch(key, expired_in: 60.minutes) do
+    User.all.to_a
+  end
+end
+```
+
+### オブジェクトをキャッシュしたい場合
+
+```
 class User < ApplicationRecord
-  def cache_users
+  def cache_users(user_id)
     key = "#{cache_key}/cache_users"
 
     Rails.cache.fetch(key, expired_in: 60.minutes) do
-      User.all.to_a
+      User.find(user_id)
   end
 end
 ```
