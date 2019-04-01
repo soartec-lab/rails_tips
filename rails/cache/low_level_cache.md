@@ -5,9 +5,9 @@
 
 ```
 def cache_users
-  key = "cache_users
+  key = "cache_users"
 
-  Rails.cache.fetch("cache_users", expired_in: 60.minutes) do
+  Rails.cache.fetch(key, expired_in: 60.minutes) do
     User.all.to_a
 end
 ```
