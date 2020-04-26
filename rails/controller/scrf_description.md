@@ -18,7 +18,7 @@ end
 
 レンダリングされるとする時に以下を行います。
 
-* Settionにトークンを格納
+* SettionStoreにトークンを格納
 
 `SessionStore`を設定している場合はそのストアを見に行きます。
 
@@ -38,10 +38,14 @@ RailsのCSRF対策では、以下の2つのトークンが同一か検証しま�
 
 * `<meta name="csrf-token" content="vtaJFQ38doX0b7wQpp0G3H7aUk9HZQni3jHET4yS8nSJRt85Tr6oH7nroQc01dM+C/dlDwt5xPff5LwyZcggeg==" />`に埋め込まれたトークン`vtaJFQ38doX0b7wQpp0G3H7aUk9HZQni3jHET4yS8nSJRt85Tr6oH7nroQc01dM+C/dlDwt5xPff5LwyZcggeg==`
 
-* Settionで保持しているトークン
+* SettionStoreで保持しているトークン
 
-例えばセッションストアにredisが指定されている場合、クライアントのセッションIDを元に、redisからtokenを取り出します。
-取り出したtokenとクライアントから送られてきたtokenが同一か検証します。
+例えばセッションストアにredisが指定されている場合以下の処理が実行されます。
+
+1. クライアントからリクエスト受付
+2. リクエストのCookieからセッションIDを読み取る
+3. 読み取ったセッションIDを元にredisからtokenを取り出す。
+4. 取り出したtokenとクライアントから送られてきたtokenが同一か検証。
 
 # 参考
 ## 記事
