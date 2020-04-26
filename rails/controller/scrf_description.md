@@ -40,6 +40,8 @@ RailsのCSRF対策では、以下の2つのトークンが同一か検証しま�
 
 * Settionで保持しているトークン
 
+例えばセッションストアにredisが指定されている場合、クライアントから送られたsession keyを元に、redisからtokenを取り出し、取り出したtokenとクライアントから送られてきたtokenが同一か検証します。
+
 # 参考
 ## 記事
 https://techracho.bpsinc.jp/hachi8833/2017_10_23/46891
