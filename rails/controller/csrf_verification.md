@@ -1,6 +1,6 @@
 # CSRF対策について
 
-コントローラーで`protect_from_forgery`が呼び出されるとrailsの1日のコードが実行される。
+コントローラーで`protect_from_forgery`が呼び出されるとrailsの以下のコードが実行される。
 
 ```ruby
 def protect_from_forgery(options = {})
