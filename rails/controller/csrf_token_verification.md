@@ -1,5 +1,9 @@
 # CSRF対策のトークン突合処理について
 
+## 前提
+
+[CSRF対策について](csrf_verification.md)
+
 ## トークンの生成
 
 `Rails new` した後の`app/views/layouts/application.html.erb`に`<%= csrf_meta_tags %>`のタグが記述されています。
