@@ -51,7 +51,23 @@ class SampleLoggerFormatter
 end
 ```
 
-## コンストラクタでも同様にできます。
+#### e.g. rails標準のログ要素をJsonに変換して出力する場合
+
+```ruby
+class JsonFormatter
+  def call(severity, timestamp, progname, msg)
+    {
+      timestamp: timestamp.iso8601,
+      LOG_LEVEL: severity,
+      message: msg
+    }.to_json << "\n"
+  end
+end
+
+logger.formatter = JsonFormatter.new
+```
+
+### コンストラクタで指定する場合。
 
 ```ruby
 require 'logger'
