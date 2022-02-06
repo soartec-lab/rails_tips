@@ -67,6 +67,25 @@ end
 logger.formatter = JsonFormatter.new
 ```
 
+#### e.g. rails標準のログ要素に加えてカスタムフィールドを出力したい場合
+
+```ruby
+class CustomFormatter
+  def call(severity, timestamp, _, custom_fields)
+    {
+      timestamp: timestamp.iso8601,
+      LOG_LEVEL: severity,
+      user_type: custom_fields[:user_type],
+      user_rank: custom_fields[:user_rank],
+    }.to_json << "\n"
+  end
+end
+
+logger.formatter = CustomFormatter.new
+
+Rails.application.config.logger.inf(user_type: 0, user_rank: 1)
+```
+
 ### コンストラクタで指定する場合。
 
 ```ruby
